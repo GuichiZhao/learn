@@ -1,8 +1,10 @@
-objects=main.o hello.o
-hello: $(objects)
-	g++ $(objects) -o hello
-main.o: main.cpp hello.h
-hello.o: hello.cpp hello.h
+objects=main.o
+main: $(objects)
+	g++ $(objects) -o main
+
+main.o: main.cpp list.h
+stack.o: stack.cpp stack.h
+sequencer.o: stack.h sequencer.cpp sequencer.h
 
 clean: 
-	rm main.o hello.o hello
+	rm main $(objects)
