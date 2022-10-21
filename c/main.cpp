@@ -17,6 +17,6 @@ int main()
     cin.getline(buf, maxBuf);
     Scanner scanner(buf);
     Parser parser(scanner, symTab);
-    status = parser.Eval();
+    status = parser.Parse();
   } while (status != stQuit);
 }

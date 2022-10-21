@@ -25,3 +25,4 @@ dist-ssr
 
 #c++
 *.o
+*.out
