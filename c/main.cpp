@@ -1,22 +1,22 @@
 #include <iostream>
-#include "list.h"
-// #include "stack.h"
-// #include "sequencer.h"
+#include "parser.h"
+
+
 
 using namespace std;
+
+const int maxBuf = 100;
 int main()
 {
-  List *l = new List();
-  cout << l->GetHead() << endl;
-  // Stack stack;
-  // for (int i = 0; i < 5; ++i)
-  // {
-  //   cout << "Push " << i << endl;
-  //   stack.Push(i);
-  // }
-  // for (int j = 0; j < 5; ++j)
-  // {
-  //   cout << "Pop " << stack.Pop() << endl;
-  // }
-  // delete &pStacks;
+  char buf[maxBuf];
+  Status status;
+  SymbolTable symTab;
+  do
+  {
+    cout << "> "; // prompt
+    cin.getline(buf, maxBuf);
+    Scanner scanner(buf);
+    Parser parser(scanner, symTab);
+    status = parser.Eval();
+  } while (status != stQuit);
 }

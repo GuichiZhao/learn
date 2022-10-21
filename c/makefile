@@ -1,4 +1,4 @@
-objects=main.o
+objects=main.o 
 main: $(objects)
 	g++ $(objects) -o main
 
