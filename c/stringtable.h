@@ -21,7 +21,7 @@ private:
   int _curId;
   StringBuffer _strBuf; // offset -> string
 };
-StringTable::StringTable() : _curId(0)
+StringTable::StringTable() : _curId(0),_htab(127)
 {
 }
 
