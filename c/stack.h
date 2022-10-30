@@ -2,19 +2,38 @@
 #include <iostream>
 using namespace std;
 class Sequencer;
+
 class Stack
 {
   friend class Sequencer;
 
 private:
-  int _arr[100];
+  int *_arr;
   int _top;
+  int _capacity;
+  void Grow()
+  {
+    cout << "Grow the array" << endl;
+    _capacity = _capacity * 2;
+    int *newArr = new int[_capacity];
+    for (int i = 0; i < _top; i++)
+    {
+      newArr[i] = _arr[i];
+    }
+    delete[] _arr;
+    _arr = newArr;
+  }
 
 public:
   Stack();
   ~Stack();
   void Push(int i)
   {
+
+    if (_top == _capacity)
+    {
+      Grow();
+    }
     _arr[_top++] = i;
   }
   int Pop()
@@ -23,9 +42,10 @@ public:
   }
 };
 
-Stack::Stack() : _top(0)
+Stack::Stack() : _top(0), _capacity(1)
 {
   cout << "Stack created" << endl;
+  _arr = new int(_capacity);
 }
 
 Stack::~Stack()
