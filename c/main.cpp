@@ -1,22 +1,29 @@
 #include <iostream>
-#include "parser.h"
-
-
-
+#include "stack.h"
+// #include "calculator.h"
+// #include "input.h"
 using namespace std;
 
-const int maxBuf = 100;
+int StrLen(char const pStr[])
+{
+  char const *p = pStr;
+  while (*p++)
+    ;
+  return p - pStr - 1;
+}
+
 int main()
 {
-  char buf[maxBuf];
-  Status status;
-  SymbolTable symTab;
-  do
+
+  Stack stack;
+  for (int i = 0; i < 5; ++i)
   {
-    cout << "> "; // prompt
-    cin.getline(buf, maxBuf);
-    Scanner scanner(buf);
-    Parser parser(scanner, symTab);
-    status = parser.Parse();
-  } while (status != stQuit);
+    cout << "Push " << i << endl;
+    stack.Push(i);
+  }
+  Sequencer seq(stack);
+  seq.Log();
+  // Stack *aStack = new Stack[4];
+  // delete [] aStack;
+  // Stack s;
 }
