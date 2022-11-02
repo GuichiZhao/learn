@@ -15,6 +15,10 @@ public:
   {
     return _next;
   }
+  int GetId() const
+  {
+    return _id;
+  }
 };
 
 Link::Link(Link *next, int id) : _next(next), _id(id)
@@ -35,11 +39,11 @@ private:
 public:
   List() : _head(0)
   {
-    cout << "Create list " << endl;
+    // cout << "Create list " << endl;
   }
   ~List()
   {
-    cout << "Destory list " << endl;
+    // cout << "Destory list " << endl;
     while (_head != 0)
     {
       Link *head = _head;
@@ -51,5 +55,9 @@ public:
   {
     Link *head = new Link(_head, id);
     _head = head;
+  }
+  Link const *GetHead() const
+  {
+    return _head;
   }
 };

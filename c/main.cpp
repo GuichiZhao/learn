@@ -8,10 +8,14 @@ using namespace std;
 
 int main()
 {
-  {
-    // Stack s;
-    // Stack *a = &s;
+  StringTable st;
+  st.ForceAdd("hello");
+  st.ForceAdd("world");
+  st.ForceAdd("guichi");
 
-    // Stack *x = new Stack();
-  }
+  // cout << st.GetString(2) << endl;
+  // cout << st.GetString(1) << endl;
+  // cout << st.GetString(0) << endl;
+  cout << st.Find("guichi") << endl;
+  // cout << st.Find("zhao") << endl;
 }
