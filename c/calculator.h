@@ -1,7 +1,5 @@
 #pragma once
 #include <iostream>
-#include "input.h"
-#include "stack.h"
 using namespace std;
 class Node
 {
