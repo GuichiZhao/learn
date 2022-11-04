@@ -23,7 +23,25 @@ public:
   }
   Status Eval()
   {
-    cout << "Parser eval\n";
+    EToken t;
+
+    do
+    {
+      switch (t = _scanner.Accept())
+      {
+      case tPlus:
+        cout << "Plus" << endl;
+        break;
+      case tMult:
+        cout << "Mul" << endl;
+        break;
+      case tNumber:
+        cout << "Num " << _scanner.GetNum() << endl;
+        break;
+      default:
+        break;
+      }
+    } while (t != tEnd);
     return stQuit;
   }
 
