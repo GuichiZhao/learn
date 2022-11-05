@@ -24,7 +24,7 @@ public:
   Status Eval()
   {
     EToken t;
-
+    int len;
     do
     {
       switch (t = _scanner.Accept())
@@ -38,6 +38,11 @@ public:
       case tNumber:
         cout << "Num " << _scanner.GetNum() << endl;
         break;
+      case tIdent:
+        char symbol[maxSymLen];
+        len = maxSymLen;
+        _scanner.SymbolName(symbol, len);
+        cout << "Symbol " << symbol << endl;
       default:
         break;
       }

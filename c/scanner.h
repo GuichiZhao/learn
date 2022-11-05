@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 using namespace std;
+const int maxSymLen = 3;
 enum EToken
 {
   tEnd,
@@ -30,6 +31,13 @@ public:
   double GetNum()
   {
     return _num;
+  }
+  void SymbolName(char *strOut, int &len)
+  {
+    assert(len >= maxSymLen);
+    strncpy(strOut, _buf + _iSymbol, _symbolLength);
+    strOut[_symbolLength] = 0;
+    len = _symbolLength;
   }
   EToken Accept()
   {
@@ -64,7 +72,25 @@ public:
       _token = tEnd;
       break;
     default:
-      _token = tError;
+      if (isalpha(_buf[_iLook]) || _buf[_iLook] == '_')
+      {
+        _token = tIdent;
+        _iSymbol = _iLook;
+        while (isalnum(_buf[_iLook]) || _buf[_iLook] == '_')
+        {
+          _iLook++;
+        }
+        _symbolLength = _iLook - _iSymbol;
+        if (_symbolLength > maxSymLen)
+        {
+          _symbolLength = maxSymLen;
+        }
+      }
+      else
+      {
+        _token = tError;
+      }
+
       break;
     }
     return _token;
@@ -74,6 +100,8 @@ private:
   const char *_buf;
   int _iLook;
   double _num;
+  int _iSymbol;
+  int _symbolLength;
   EToken _token;
   void EatWhite()
   {
