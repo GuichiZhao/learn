@@ -5,7 +5,7 @@ const int idNotFound = -1;
 class SymbolTable
 {
 public:
-  explicit SymbolTable(int size);
+  SymbolTable(int size);
   ~SymbolTable();
   int ForceAdd(char const *str, int len);
   int Find(char const *str, int len) const;
