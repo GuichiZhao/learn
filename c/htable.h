@@ -3,20 +3,12 @@
 class HTable
 {
 public:
-  explicit HTable(int size) : _size(size)
-  {
-    alist = new List[size];
-  }
-  ~HTable()
-  {
-    delete[] alist;
-  };
-  int GetSize() const
-  {
-    return _size;
-  };
+  explicit HTable(int size);
+  ~HTable();
+  int GetSize() const;
 
 private:
   int _size;
   List *alist;
+  int hash(const char *str) const;
 };

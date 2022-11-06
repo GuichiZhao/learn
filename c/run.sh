@@ -1,2 +1,2 @@
-g++ main.cpp &&
-./a.out
+make &&
+./main

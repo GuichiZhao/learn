@@ -1,13 +1,7 @@
 #include <iostream>
 #include <cmath>
-// #include "hashtable.h"
-// #include "list.h"
-// #include "stack.h"
-// #include "calculator.h"
-#include "parser.h"
 #include "htable.h"
 const int maxBuf = 100;
-// #include "input.h"
 using namespace std;
 
 void Log(const HTable &h)
@@ -16,7 +10,8 @@ void Log(const HTable &h)
 }
 int main()
 {
-  // Log(5);
+  HTable h(5);
+  Log(h);
   // double (*pFun)(double x);
   // pFun=sin;
 
