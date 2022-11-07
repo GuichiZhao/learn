@@ -1,4 +1,3 @@
-#pragma once
 #include "htable.h"
 const int idNotFound = -1;
 
@@ -8,7 +7,8 @@ public:
   SymbolTable(int size);
   ~SymbolTable();
   int ForceAdd(char const *str, int len);
-  int Find(char const *str, int len) const;
+  int ForceAdd(const char *str);
+  int Find(char const *str, int len = 0) const;
   char const *GetString(int id) const;
 
 private:

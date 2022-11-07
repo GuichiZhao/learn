@@ -1,6 +1,6 @@
 #include <iostream>
 #include <cmath>
-#include "htable.h"
+#include "symboltable.h"
 const int maxBuf = 100;
 using namespace std;
 
@@ -10,8 +10,16 @@ void Log(const HTable &h)
 }
 int main()
 {
-  HTable h(5);
-  Log(h);
+  SymbolTable table(127);
+  table.ForceAdd("Hello");
+  table.ForceAdd("World");
+  table.ForceAdd("Guichi");
+
+  // cout << table.GetString(0) << endl;
+  // cout << table.GetString(1) << endl;
+  // cout << table.GetString(2) << endl;
+  cout << "table.GetString(2) " << table.GetString(2) << endl;
+  cout << "table.Find(Guichi,1) " << table.Find("Guichi") << endl;
   // double (*pFun)(double x);
   // pFun=sin;
 
