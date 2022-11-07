@@ -5,6 +5,7 @@ class SymbolTable
 {
 public:
   SymbolTable(int size);
+  SymbolTable();
   ~SymbolTable();
   int ForceAdd(char const *str, int len);
   int ForceAdd(const char *str);

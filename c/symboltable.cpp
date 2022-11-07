@@ -3,6 +3,7 @@
 
 using namespace std;
 
+SymbolTable ::SymbolTable() : SymbolTable(127){};
 SymbolTable::SymbolTable(int size) : _size(size), _curId(0), _curStrOff(0), _htab(size + 1)
 {
   _offStr = new int[size];
@@ -25,7 +26,7 @@ int SymbolTable::ForceAdd(const char *str, int len)
   _curStrOff = _curStrOff + len + 1;
   _htab.Add(str, _curId);
   _curId++;
-  return _curId;
+  return _curId - 1;
 }
 
 int SymbolTable::Find(char const *str, int len) const
@@ -46,5 +47,6 @@ int SymbolTable::Find(char const *str, int len) const
 
 char const *SymbolTable::GetString(int id) const
 {
+  cout << "_offStr[id] " << _offStr[id] << endl;
   return _strBuf + _offStr[id];
 }
