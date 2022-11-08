@@ -13,10 +13,8 @@ Store::Store(int size, SymbolTable &symTab) : _size(size)
     _status[i] = stNotInit;
   // add predefined constants
   // Note: if more needed, do a more general job
-  cout << "e = " << exp(1) << endl;
   int id = symTab.ForceAdd("e", 1);
   SetValue(id, exp(1));
-  cout << "pi = " << 2 * acos(0.0) << endl;
   id = symTab.ForceAdd("pi", 2);
   SetValue(id, 2.0 * acos(0.0));
 }

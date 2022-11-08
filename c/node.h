@@ -5,8 +5,8 @@ class Node
 {
 public:
   double virtual Calc() = 0;
-  Node();
-  virtual ~Node();
+  Node(){};
+  virtual ~Node(){};
 };
 
 class NumNode : public Node
@@ -34,7 +34,7 @@ class AddNode : public BinNode
 {
 public:
   AddNode(Node *left, Node *right);
-  ~AddNode();
+  ~AddNode(){};
   double Calc();
 };
 
@@ -42,6 +42,6 @@ class MultNode : public BinNode
 {
 public:
   MultNode(Node *left, Node *right);
-  ~MultNode();
+  ~MultNode(){};
   double Calc();
 };

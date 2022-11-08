@@ -28,7 +28,6 @@ public:
   }
   void SetValue(int id, double val)
   {
-    cout << "setvalue " << id << ":" << val << endl;
     if (id < _size)
     {
       _cell[id] = val;

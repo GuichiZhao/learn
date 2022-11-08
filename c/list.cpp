@@ -9,12 +9,12 @@ Link *Link::GetNext() const
 
 Link::Link(Link *next, int id) : _next(next), _id(id)
 {
-  cout << "Create link " << _id << endl;
+  // cout << "Create link " << _id << endl;
 }
 
 Link::~Link()
 {
-  cout << "Destory link " << _id << endl;
+  // cout << "Destory link " << _id << endl;
 }
 
 int Link::GetId() const
