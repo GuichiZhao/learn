@@ -5,7 +5,7 @@
 using namespace std;
 const int maxSymLen = 3;
 
-Scanner::Scanner(char const *buf) : _buf(buf)
+Scanner::Scanner(char const *buf) : _buf(buf), _iLook(0)
 {
   cout << "scan the string: " << _buf << endl;
   Accept();
