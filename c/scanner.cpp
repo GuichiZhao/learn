@@ -85,7 +85,6 @@ void Scanner::EatWhite()
 {
   while (isspace(_buf[_iLook]))
   {
-    cout << "white detected" << endl;
     ++_iLook;
   }
 }

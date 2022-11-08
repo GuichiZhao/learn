@@ -23,13 +23,11 @@ Status Parser::Eval()
   Parse();
   if (_status == stOk)
   {
-    cout << "OK" << endl;
     Execute();
   }
 
   else
   {
-    cout << "Quit" << endl;
     _status = stQuit;
   }
 
@@ -41,7 +39,6 @@ void Parser::Execute()
   if (_pTree)
   {
     double result = _pTree->Calc();
-    cout << "Result: " << result << endl;
   }
   else
   {
@@ -55,7 +52,6 @@ void Parser::Parse()
 
 Node *Parser::Expr()
 {
-  cout << "Expr" << endl;
   Node *pNode = Term();
   EToken token = _scanner.Token();
   if (token == tPlus)
@@ -85,7 +81,6 @@ Node *Parser::Factor()
   EToken token = _scanner.Token();
   if (token == tNumber)
   {
-    cout << "receive number: " << _scanner.Number() << endl;
     pNode = new NumNode(_scanner.Number());
     _scanner.Accept();
   }

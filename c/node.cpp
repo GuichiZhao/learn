@@ -14,7 +14,6 @@ BinNode::~BinNode()
 {
   delete _left;
   delete _right;
-  cout << "Destory BinNode " << endl;
 };
 
 AddNode::AddNode(Node *left, Node *right) : BinNode(left, right) {}
