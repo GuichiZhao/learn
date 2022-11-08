@@ -1,5 +1,6 @@
-#pragma once
 #include <iostream>
+#include <cassert>
+#include <cstring>
 using namespace std;
 const int maxSymLen = 3;
 enum EToken
@@ -20,7 +21,7 @@ enum EToken
 class Scanner
 {
 public:
-  Scanner(char *buf) : _buf(buf), _iLook(0)
+  Scanner(const char *buf) : _buf(buf), _iLook(0)
   {
     cout << "Create Scanner with " << _buf << endl;
   }
