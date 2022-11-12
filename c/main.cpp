@@ -17,7 +17,7 @@ int main()
   SymbolTable symTab(maxSymbols);
   Store store(maxSymbols, symTab);
 
-  Scanner scanner("3.2/2");
+  Scanner scanner("(x=5)+x");
   cout << "Start parse" << endl;
   Parser parser(scanner, store, symTab);
   status = parser.Eval();

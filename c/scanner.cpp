@@ -37,6 +37,18 @@ EToken Scanner::Accept()
     _token = tDivide;
     _iLook++;
     break;
+  case '(':
+    _token = tLParen;
+    _iLook++;
+    break;
+  case ')':
+    _token = tRParen;
+    _iLook++;
+    break;
+  case '=':
+    _token=tAssign;
+    _iLook++;
+    break;
   case '0':
   case '1':
   case '2':
