@@ -64,6 +64,12 @@ Node *Parser::Expr()
     Node *pRight = Expr();
     pNode = new AddNode(pNode, pRight);
   }
+  else if (token == tMinus)
+  {
+    _scanner.Accept();
+    Node *pRight = Expr();
+    pNode = new SubNode(pNode, pRight);
+  }
   return pNode;
 }
 
@@ -75,6 +81,12 @@ Node *Parser::Term()
     _scanner.Accept();
     Node *pRight = Term();
     pNode = new MultNode(pNode, pRight);
+  }
+  else if (_scanner.Token() == tDivide)
+  {
+    _scanner.Accept();
+    Node *pRight = Term();
+    pNode = new DivideNode(pNode, pRight);
   }
   return pNode;
 }

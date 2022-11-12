@@ -30,3 +30,17 @@ double MultNode::Calc()
   cout << "Mul" << endl;
   return _left->Calc() * _right->Calc();
 };
+
+SubNode::SubNode(Node *left, Node *right) : BinNode(left, right){};
+double SubNode::Calc()
+{
+  cout << "Sub" << endl;
+  return _left->Calc() - _right->Calc();
+}
+
+DivideNode::DivideNode(Node *left, Node *right) : BinNode(left, right){};
+double DivideNode::Calc()
+{
+  cout << "Div" << endl;
+  return _left->Calc() / _right->Calc();
+}

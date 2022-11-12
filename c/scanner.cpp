@@ -25,8 +25,16 @@ EToken Scanner::Accept()
     _token = tPlus;
     _iLook++;
     break;
+  case '-':
+    _token = tMinus;
+    _iLook++;
+    break;
   case '*':
     _token = tMult;
+    _iLook++;
+    break;
+  case '/':
+    _token = tDivide;
     _iLook++;
     break;
   case '0':

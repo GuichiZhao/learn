@@ -1,4 +1,7 @@
-objects=main.o htable.o list.o symboltable.o store.o scanner.o parser.o node.o
+CXX=c++
+CXXFLAGS+=-std=c++17
+
+objects = main.o htable.o list.o symboltable.o store.o scanner.o parser.o node.o
 main: $(objects)
 	g++ $(objects) -o main
 

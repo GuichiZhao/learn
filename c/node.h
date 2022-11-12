@@ -45,3 +45,19 @@ public:
   ~MultNode(){};
   double Calc();
 };
+
+class SubNode : public BinNode
+{
+public:
+  SubNode(Node *left, Node *right);
+  ~SubNode(){};
+  double Calc();
+};
+
+class DivideNode : public BinNode
+{
+public:
+  DivideNode(Node *left, Node *right);
+  ~DivideNode(){};
+  double Calc();
+};
