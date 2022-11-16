@@ -9,8 +9,13 @@ const int maxBuf = 100;
 using namespace std;
 const int maxSymbols = 100;
 
+int hello(){
+  return 10;
+}
+
 int main()
 {
+
 
   char buf[maxBuf];
   Status status;
