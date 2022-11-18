@@ -25,8 +25,28 @@ EToken Scanner::Accept()
     _token = tPlus;
     _iLook++;
     break;
+  case '-':
+    _token = tMinus;
+    _iLook++;
+    break;
   case '*':
     _token = tMult;
+    _iLook++;
+    break;
+  case '/':
+    _token = tDivide;
+    _iLook++;
+    break;
+  case '(':
+    _token = tLParen;
+    _iLook++;
+    break;
+  case ')':
+    _token = tRParen;
+    _iLook++;
+    break;
+  case '=':
+    _token=tAssign;
     _iLook++;
     break;
   case '0':
@@ -85,6 +105,7 @@ void Scanner::EatWhite()
 {
   while (isspace(_buf[_iLook]))
   {
+    cout << "white detected" << endl;
     ++_iLook;
   }
 }

@@ -1,7 +1,8 @@
 #include "parser.h"
 #include "scanner.h"
+#include "symboltable.h"
 #include "node.h"
-
+const int maxSymLen = 10;
 Parser::Parser(Scanner &scanner,
                Store &store,
                //  FunctionTable &funTab,
@@ -23,11 +24,13 @@ Status Parser::Eval()
   Parse();
   if (_status == stOk)
   {
+    cout << "OK" << endl;
     Execute();
   }
 
   else
   {
+    cout << "Quit" << endl;
     _status = stQuit;
   }
 
@@ -39,6 +42,7 @@ void Parser::Execute()
   if (_pTree)
   {
     double result = _pTree->Calc();
+    cout << "Result: " << result << endl;
   }
   else
   {
@@ -52,6 +56,7 @@ void Parser::Parse()
 
 Node *Parser::Expr()
 {
+  cout << "Expr" << endl;
   Node *pNode = Term();
   EToken token = _scanner.Token();
   if (token == tPlus)
@@ -59,6 +64,21 @@ Node *Parser::Expr()
     _scanner.Accept();
     Node *pRight = Expr();
     pNode = new AddNode(pNode, pRight);
+  }
+  else if (token == tMinus)
+  {
+    _scanner.Accept();
+    Node *pRight = Expr();
+    pNode = new SubNode(pNode, pRight);
+  }
+  else if (token == tAssign)
+  {
+    _scanner.Accept();
+    Node *pRight = Expr();
+    if (pNode->IsLvalue())
+    {
+      pNode = new AssignNode(pNode, pRight);
+    }
   }
   return pNode;
 }
@@ -72,6 +92,12 @@ Node *Parser::Term()
     Node *pRight = Term();
     pNode = new MultNode(pNode, pRight);
   }
+  else if (_scanner.Token() == tDivide)
+  {
+    _scanner.Accept();
+    Node *pRight = Term();
+    pNode = new DivideNode(pNode, pRight);
+  }
   return pNode;
 }
 
@@ -79,10 +105,43 @@ Node *Parser::Factor()
 {
   Node *pNode;
   EToken token = _scanner.Token();
+
   if (token == tNumber)
   {
+    cout << "receive number: " << _scanner.Number() << endl;
     pNode = new NumNode(_scanner.Number());
     _scanner.Accept();
+  }
+  else if (token == tLParen)
+  {
+    cout << " token (" << endl;
+    _scanner.Accept();
+    pNode = Expr();
+    if (_scanner.Token() != tRParen)
+    {
+      _status = stError;
+    }
+    _scanner.Accept();
+  }
+  else if (token == tIdent)
+  {
+    char strSymbol[maxSymLen + 1];
+    int lenSym = maxSymLen;
+    // copy the symbol into strSymbol
+    _scanner.SymbolName(strSymbol, lenSym);
+    int id = _symTab.Find(strSymbol, lenSym);
+    _scanner.Accept();
+    if (_scanner.Token() == tLParen)
+    {
+    }
+    else
+    {
+      if (id == idNotFound)
+      {
+        id = _symTab.ForceAdd(strSymbol, lenSym);
+      }
+      pNode = new VarNode(id, _store);
+    }
   }
   return pNode;
 }

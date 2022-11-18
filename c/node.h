@@ -1,12 +1,20 @@
 #include <iostream>
+#include <cassert>
 using namespace std;
+
+class Store;
 
 class Node
 {
 public:
-  double virtual Calc() = 0;
   Node(){};
+  double virtual Calc() = 0;
   virtual ~Node(){};
+  bool virtual IsLvalue() const
+  {
+    return 0;
+  }
+  virtual void Assign (double value) {}
 };
 
 class NumNode : public Node
@@ -43,5 +51,48 @@ class MultNode : public BinNode
 public:
   MultNode(Node *left, Node *right);
   ~MultNode(){};
+  double Calc();
+};
+
+class SubNode : public BinNode
+{
+public:
+  SubNode(Node *left, Node *right);
+  ~SubNode(){};
+  double Calc();
+};
+
+class DivideNode : public BinNode
+{
+public:
+  DivideNode(Node *left, Node *right);
+  ~DivideNode(){};
+  double Calc();
+};
+
+class VarNode : public Node
+{
+public:
+  VarNode(int id, Store &store) : _id(id), _store(store)
+  {
+  }
+  ~VarNode(){};
+  double Calc();
+  bool IsLvalue() const;
+  void Assign(double val);
+
+private:
+  int _id;
+  Store &_store;
+};
+
+class AssignNode : public BinNode
+{
+public:
+  AssignNode(Node *pLeft, Node *pRight)
+      : BinNode(pLeft, pRight)
+  {
+    assert(_left->IsLvalue());
+  }
   double Calc();
 };
