@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cassert>
+#include "funtab.h"
 using namespace std;
 
 class Store;
@@ -14,7 +15,7 @@ public:
   {
     return 0;
   }
-  virtual void Assign (double value) {}
+  virtual void Assign(double value) {}
 };
 
 class NumNode : public Node
@@ -96,3 +97,49 @@ public:
   }
   double Calc();
 };
+
+class FunNode : public Node
+{
+public:
+  FunNode(PtrFun pFun, Node *pNode)
+      : _pNode(pNode), _pFun(pFun)
+  {
+  }
+  ~FunNode() { delete _pNode; }
+  double Calc();
+
+private:
+  Node *const _pNode;
+  PtrFun _pFun;
+};
+
+
+// FunctionEntry funArr[maxIdFun] =
+//     {
+//         log,
+//         "log",
+//         log10, "log10",
+//         exp,
+//         "exp",
+//         sqrt,
+//         "sqrt",
+//         sin,
+//         "sin",
+//         cos,
+//         "cos",
+//         tan,
+//         "tan",
+//         sinh,
+//         "sinh",
+//         cosh,
+//         "cosh",
+//         tanh,
+//         "tanh",
+//         asin,
+//         "asin",
+//         acos,
+//         "acos",
+//         atan,
+//         "atan",
+//         0,
+//         ""};

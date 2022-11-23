@@ -16,7 +16,7 @@ enum Status
 class Parser
 {
 public:
-  Parser(Scanner &scanner, Store &store, SymbolTable &symTab);
+  Parser(Scanner &scanner, Store &store, FunctionTable &funTab, SymbolTable &symTab);
   ~Parser();
   Status Eval();
 
@@ -30,6 +30,6 @@ private:
   Node *_pTree;
   Status _status;
   Store &_store;
-  // FunctionTable &_funTab;
+  FunctionTable &_funTab;
   SymbolTable &_symTab;
 };

@@ -5,12 +5,12 @@
 const int maxSymLen = 10;
 Parser::Parser(Scanner &scanner,
                Store &store,
-               //  FunctionTable &funTab,
+               FunctionTable &funTab,
                SymbolTable &symTab)
     : _scanner(scanner),
       _pTree(0),
       _status(stOk),
-      // _funTab(funTab),
+      _funTab(funTab),
       _store(store),
       _symTab(symTab)
 {
@@ -131,8 +131,23 @@ Node *Parser::Factor()
     _scanner.SymbolName(strSymbol, lenSym);
     int id = _symTab.Find(strSymbol, lenSym);
     _scanner.Accept();
-    if (_scanner.Token() == tLParen)
+    if (_scanner.Token() == tLParen) // function call
     {
+      _scanner.Accept(); // accept '('
+      pNode = Expr();
+      if (_scanner.Token() == tRParen)
+        _scanner.Accept(); // accept ')'
+      else
+        _status = stError;
+      if (id != idNotFound && id < _funTab.Size())
+      {
+        pNode = new FunNode(_funTab.GetFun(id), pNode);
+      }
+      else
+      {
+        cout << "Unknown function \"";
+        cout << strSymbol << "\"\n";
+      }
     }
     else
     {

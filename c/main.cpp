@@ -47,31 +47,16 @@ int main()
   Status status;
   SymbolTable symTab(maxSymbols);
   FunctionTable funtab(symTab, funArr);
-
   Store store(maxSymbols, symTab);
 
-  const char *inputs[] = {"1+2", "pi"};
+  const char *inputs[] = {"cos(3.14)", "pi"};
 
-  for (int i = 0; i < 2; i++)
+  for (int i = 0; i < 1; i++)
   {
-    const char* input=inputs[i];
+    const char *input = inputs[i];
     Scanner scanner(input);
     cout << "Start parse" << endl;
-    Parser parser(scanner, store, symTab);
+    Parser parser(scanner, store, funtab, symTab);
     status = parser.Eval();
   }
-
-  // {
-  //   Scanner scanner("(x=5)");
-  //   cout << "Start parse" << endl;
-  //   Parser parser(scanner, store, symTab);
-  //   status = parser.Eval();
-  // }
-
-  // {
-  //   Scanner scanner("x+8");
-  //   cout << "Start parse" << endl;
-  //   Parser parser(scanner, store, symTab);
-  //   status = parser.Eval();
-  // }
 }

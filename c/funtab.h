@@ -9,7 +9,6 @@ public:
   const char *strFun;
 };
 
-
 class FunctionTable
 {
 public:

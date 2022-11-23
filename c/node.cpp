@@ -46,6 +46,12 @@ double DivideNode::Calc()
   return _left->Calc() / _right->Calc();
 }
 
+double FunNode::Calc()
+{
+  assert(_pFun != 0);
+  return (*_pFun)(_pNode->Calc());
+}
+
 double VarNode::Calc()
 {
   double x = 0.0;
