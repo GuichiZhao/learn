@@ -49,12 +49,14 @@ int main()
   FunctionTable funtab(symTab, funArr);
   Store store(maxSymbols, symTab);
 
-  const char *inputs[] = {"cos(3.14)", "pi"};
+  const char *inputs[] = {"1+1", "pi"};
 
   for (int i = 0; i < 1; i++)
   {
     const char *input = inputs[i];
     Scanner scanner(input);
+
+    cout << "scanner.Token()" << scanner.Token() << endl;
     cout << "Start parse" << endl;
     Parser parser(scanner, store, funtab, symTab);
     status = parser.Eval();

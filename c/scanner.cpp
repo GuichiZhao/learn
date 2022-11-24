@@ -46,7 +46,7 @@ EToken Scanner::Accept()
     _iLook++;
     break;
   case '=':
-    _token=tAssign;
+    _token = tAssign;
     _iLook++;
     break;
   case '0':
@@ -60,6 +60,7 @@ EToken Scanner::Accept()
   case '8':
   case '9':
   case '.':
+    cout << "tNumber " << tNumber << endl;
     _token = tNumber;
     char *end;
     _number = strtod(_buf + _iLook, &end);

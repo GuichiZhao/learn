@@ -16,7 +16,7 @@ enum Status
 class Parser
 {
 public:
-  Parser(Scanner &scanner, Store &store, FunctionTable &funTab, SymbolTable &symTab);
+  Parser(Scanner scanner, Store &store, FunctionTable &funTab, SymbolTable &symTab);
   ~Parser();
   Status Eval();
 

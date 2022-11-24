@@ -2,8 +2,10 @@
 #include "scanner.h"
 #include "symboltable.h"
 #include "node.h"
+#include <iostream>
+using namespace std;
 const int maxSymLen = 10;
-Parser::Parser(Scanner &scanner,
+Parser::Parser(Scanner scanner,
                Store &store,
                FunctionTable &funTab,
                SymbolTable &symTab)
@@ -14,6 +16,7 @@ Parser::Parser(Scanner &scanner,
       _store(store),
       _symTab(symTab)
 {
+  cout << "Parse constructor " << _scanner.Token() << endl;
 }
 Parser::~Parser()
 {
@@ -21,6 +24,8 @@ Parser::~Parser()
 }
 Status Parser::Eval()
 {
+  cout << "Parse Eval token " << _scanner.Token() << endl;
+  cout << "Parse Eval str " << _scanner._buf << endl;
   Parse();
   if (_status == stOk)
   {
@@ -39,6 +44,7 @@ Status Parser::Eval()
 
 void Parser::Execute()
 {
+  cout << "Execute" << endl;
   if (_pTree)
   {
     double result = _pTree->Calc();
@@ -105,6 +111,7 @@ Node *Parser::Factor()
 {
   Node *pNode;
   EToken token = _scanner.Token();
+  cout << "EToken token " << token << endl;
 
   if (token == tNumber)
   {
