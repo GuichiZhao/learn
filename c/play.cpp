@@ -1,49 +1,57 @@
 #include <iostream>
 #include <math.h>
+#include <cstring>
 using namespace std;
 
-enum T
-{
-  one,
-  two,
-  three
-};
-
-class Scanner
+class Value
 {
 public:
-  Scanner()
+  Value()
   {
-    addValue();
-    cout << "create v: " << _v << endl;
+    cout << " Default constructor\n";
+    _numString = new char[1];
+    _numString[0] = '\0';
   }
-  T getV(){
-    return _v;
-  }
-  void addValue()
+  Value(int i)
   {
-    _v = two;
+    cout << "Construction /conversion from int " << i << endl;
+    stringstream buffer;
+    buffer << i << ends; // terminate string
+    Init(buffer.str().c_str());
+    Display();
   }
-  ~Scanner()
+  Value(Value const &v)
   {
-    cout << "destory v: " << _v << endl;
+    cout << " Copy constructor (" << v._numString << " )\n";
+    Init(v._numString);
+    Display();
   }
-  T _v;
-};
+  Value &operator=(Value const &v)
+  {
+    cout << " operator = ( " << v._numString << " )\n";
+    if (_numString != v._numString)
+    {
+      delete _numString;
+      Init(v._numString);
+    }
+    Display();
+    return *this;
+  }
+  friend Value operator+(Value const &v1, Value const &v2);
 
-class Parser
-{
-public:
-  Parser(Scanner v) : _v(v){};
-  void log()
+private:
+  void Init(char const *buf)
   {
-    cout << "Value: " << _v.getV() << endl;
-  };
-  Scanner &_v;
+    int len = strlen(buf);
+    _numString = new char[len + 1];
+    strcpy(_numString, buf);
+  }
+  void Display()
+  {
+    cout << "\t" << _numString << endl;
+  }
+  char *_numString;
 };
 int main()
 {
-  Scanner v1;
-  Parser c(v1);
-  c.log();
 }
