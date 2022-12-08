@@ -1,14 +1,11 @@
 #include <iostream>
+#include "Sales_item.h"
+std::string global_str;
+int global_int;
 int main()
 {
-  int sum = 0, value = 0;
-  // read until end-of-file, calculating a running total of all values read
-  while (std::cin >> value)
-  {
-    std::cout << value << std::endl;
-    sum += value; // equivalent to sum = sum + value
-  }
-
-  std::cout << "Sum is: " << sum << std::endl;
-  return 0;
+  int local_int;
+  std::string local_str;
+  std::cout << global_str << std::endl;
+  std::cout << local_str << std::endl;
 }

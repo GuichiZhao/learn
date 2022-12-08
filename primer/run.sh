@@ -1,0 +1,1 @@
+g++ prog.cc && ./a.out <infile
