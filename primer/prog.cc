@@ -1,11 +1,11 @@
 #include <iostream>
-#include "Sales_item.h"
-std::string global_str;
-int global_int;
+#include <string>
+
+using namespace std;
 int main()
 {
-  int local_int;
-  std::string local_str;
-  std::cout << global_str << std::endl;
-  std::cout << local_str << std::endl;
+  string s("some string");
+  for (auto it = s.begin(); it != s.end() && !isspace(*it); ++it)
+    *it = toupper(*it); // capitalize the current character
+  cout << s << endl;
 }

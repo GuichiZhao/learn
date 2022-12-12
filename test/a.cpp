@@ -1,2 +1,2 @@
 #include "a.h"
-int a = 5;
+extern const int a = 5;
