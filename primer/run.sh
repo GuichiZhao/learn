@@ -1,1 +1,1 @@
-g++ prog.cc && ./a.out <infile
+g++ prog.cpp && ./a.out <infile
