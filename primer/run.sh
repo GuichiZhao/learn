@@ -1,1 +1,1 @@
-g++ prog.cpp && ./a.out <infile
+make && ./prog 
