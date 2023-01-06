@@ -1,4 +1,3 @@
-#include <iostream>
 #include "Sales_data.h"
 using namespace std;
 double Sales_data::avg_price() const
