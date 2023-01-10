@@ -1,5 +1,6 @@
 #include <iostream>
-// void hello()
-// {
-//   std::cout << "Hello!" << std::endl;
-// }
+#include "hello.h"
+int Hello::hello()
+{
+  return 500;
+}

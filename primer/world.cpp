@@ -6,6 +6,7 @@ using namespace std;
 
 void world()
 {
-  hello();
-  cout << "world" << endl;
+  Hello h;
+  int i = h.hello();
+  cout << i << endl;
 }

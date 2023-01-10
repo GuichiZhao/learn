@@ -1,1 +1,0 @@
-/usr/bin/c++  -Wold-style-cast -fno-exceptions CMakeFiles/wasm-c-api-hostref.dir/third_party/wasm-c-api/example/hostref.c.o -o wasm-c-api-hostref  -Wl,-rpath,/home/plusai/wabt/build libwasm.so libwabt.a 

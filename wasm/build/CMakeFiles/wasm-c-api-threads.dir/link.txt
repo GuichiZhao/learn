@@ -1,1 +1,0 @@
-/usr/bin/c++  -Wold-style-cast -fno-exceptions CMakeFiles/wasm-c-api-threads.dir/third_party/wasm-c-api/example/threads.c.o -o wasm-c-api-threads  -Wl,-rpath,/home/plusai/wabt/build libwasm.so libwabt.a 

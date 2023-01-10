@@ -1,1 +1,1 @@
-make && ./prog 
+make && ./prog < record

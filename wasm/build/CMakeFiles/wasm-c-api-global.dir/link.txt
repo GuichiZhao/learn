@@ -1,1 +1,0 @@
-/usr/bin/c++  -Wold-style-cast -fno-exceptions CMakeFiles/wasm-c-api-global.dir/third_party/wasm-c-api/example/global.c.o -o wasm-c-api-global  -Wl,-rpath,/home/plusai/wabt/build libwasm.so libwabt.a 

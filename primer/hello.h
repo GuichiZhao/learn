@@ -3,9 +3,15 @@
 
 #include <iostream>
 #include <string>
-constexpr int hello()
+class Hello
 {
-  return 1;
-}
+public:
+  int getValue()
+  {
+    return 10;
+  }
+  int hello();
+};
+
 
 #endif

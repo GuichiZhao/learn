@@ -26,3 +26,4 @@ dist-ssr
 #c++
 *.o
 *.out
+build
