@@ -12,10 +12,23 @@
     </div>
 
     <script>
-      fetchAndInstantiate("./hello.wasm").then(function (instance) {
-        var ho = instance.exports.how_old(2021, 2000);
-        var ageEl = document.getElementById("age");
-        ageEl.innerText = ho;
+      var importObject = {
+        imports: {
+          log_func: function (arg) {
+            console.log("You are this old: " + arg + " years.");
+          },
+        },
+      };
+      fetchAndInstantiate("./hellolog.wasm", importObject).then(function (
+        instance
+      ) {
+        instance.exports.log_how_old(2021, 2000);
+      });
+      WebAssembly.compileStreaming(fetch("./hellolog.wasm")).then(function (mod) {
+        var imports = WebAssembly.Module.imports(mod);
+        console.log(imports[0]);
+        var exports = WebAssembly.Module.exports(mod);
+        console.log(exports);
       });
     </script>
   </body>
