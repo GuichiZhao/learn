@@ -5,25 +5,23 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
-#include "Sales_data.h"
+#include <deque>
+#include <algorithm>
+#include <numeric>
+#include "words.h"
+#include "Sales_item.h"
 using namespace std;
-typedef string::size_type sz;
 
-class Value
+bool greatThenFive(string s)
 {
-public:
-  Value(int i) : i(i)
-  {
-    cout << "Value created: " << i << endl;
-  }
-  void print() const
-  {
-    cout << "The value is: " << i << endl;
-  }
-  int i;
-};
+  return s.size() >= 5;
+}
 
 int main(int argc, char **argv)
 {
+  string line("FIRST,MIDDLE,LAST");
+  auto rcomma = find(line.crbegin(), line.crend(), ',');
+  cout << string(rcomma.base(), line.cend()) << endl;
+
 
 }
