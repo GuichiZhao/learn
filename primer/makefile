@@ -1,18 +1,14 @@
 CXX=g++
-CXXFLAGS+=-std=c++11
+CXXFLAGS+=-std=c++14
 CXXFLAGS+=-DNDEBUG 
 
 
-objects = prog.o hello.o world.o Sales_data.o Screen.o Window_mgr.o
+objects = prog.o StrBlob.o
 main: $(objects)
 	g++  $(objects) -o prog
 
-prog.o: prog.cpp hello.h world.h
-hello.o: hello.cpp hello.h 
-world.o: world.cpp world.h hello.h
-Sales_data.o: Sales_data.cpp Sales_data.h
-Screen.o: Screen.cpp Screen.h
-Window_mgr.o: Window_mgr.cpp Window_mgr.h
+prog.o: prog.cpp StrBlob.h
+StrBlob.o: StrBlob.h StrBlob.cpp
 
 
 clean: 
