@@ -1,11 +1,19 @@
+#ifndef STR_BLOB_H
+#define STR_BLOB_H
+
 #include <string>
 #include <vector>
 #include <memory>
 #include <stdexcept>
 
+class StrBlobPtr;
 class StrBlob
 {
+  friend class StrBlobPtr;
+
 public:
+  StrBlobPtr begin(); // return StrBlobPtr to the ﬁrst element
+  StrBlobPtr end();
   typedef std::vector<std::string>::size_type size_type;
   StrBlob();
   StrBlob(std::initializer_list<std::string> il);
@@ -24,3 +32,4 @@ private:
   void check(size_type i, const std::string &msg) const;
 };
 
+#endif
