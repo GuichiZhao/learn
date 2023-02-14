@@ -1,10 +1,4 @@
 LLVM_VERSION ?= 11
-
-DEPS = 
-OBJ = library.o
-NANOLIBC_OBJ = $(patsubst %.cpp,%.o,$(wildcard nanolibc/*.cpp))
-OUTPUT = library.wasm
-
 COMPILE_FLAGS = -Wall \
 		--target=wasm32 \
 		-Os \
@@ -16,8 +10,11 @@ COMPILE_FLAGS = -Wall \
 		-DPRINTF_DISABLE_SUPPORT_FLOAT=1 \
 		-DPRINTF_DISABLE_SUPPORT_LONG_LONG=1 \
 		-DPRINTF_DISABLE_SUPPORT_PTRDIFF_T=1
+OUTPUT = library.wasm
+OBJ = library.o
 
-$(OUTPUT): $(OBJ) $(NANOLIBC_OBJ) Makefile
+
+$(OUTPUT): $(OBJ) Makefile
 	wasm-ld \
 		-o $(OUTPUT) \
 		--no-entry \
@@ -31,21 +28,6 @@ $(OUTPUT): $(OBJ) $(NANOLIBC_OBJ) Makefile
 		--gc-sections \
 		$(OBJ) \
 		$(LIBCXX_OBJ) \
-		$(NANOLIBC_OBJ)
 
-# aa: 
-
-%.o: %.cpp $(DEPS) Makefile nanolibc/libc.h nanolibc/libc_extra.h
-	clang++ \
-		-c \
-		$(COMPILE_FLAGS) \
-		-o $@ \
-		$<
-
-library.wat: $(OUTPUT) Makefile
-	wasm2wat -o library.wat $(OUTPUT)
-
-wat: library.wat
-
-clean:
-	rm -f $(OBJ) $(NANOLIBC_OBJ) $(OUTPUT) library.wat
+library.o:library.cpp common.h js.h
+	clang++ -c $(COMPILE_FLAGS) -o library.o library.cpp

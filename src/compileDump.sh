@@ -1,1 +1,0 @@
-../wabt-1.0.32-ubuntu/bin/wat2wasm hello.wat  &&  ../wabt-1.0.32-ubuntu/bin/wasm-objdump -x hello.wasm 
