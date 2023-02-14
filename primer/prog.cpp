@@ -28,13 +28,7 @@ using int3 = int[3];
 int main()
 {
 
-  string a("1");
-  string b("2");
-  string *c = &a;
-  a = b;
-  cout << a << endl;
-  cout << b << endl;
-  cout << *c << endl;
+  cout << __cplusplus << endl;
 
   // *s = Value(2);
   // // cout << "xx" << endl;

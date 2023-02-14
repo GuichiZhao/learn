@@ -1,0 +1,3 @@
+NANOLIBC_OBJ = $(patsubst %.cpp,%.o,$(wildcard nanolibc/*.cpp))
+all:
+	echo ${NANOLIBC_OBJ}
