@@ -11,7 +11,7 @@ COMPILE_FLAGS = -Wall \
 		-DPRINTF_DISABLE_SUPPORT_LONG_LONG=1 \
 		-DPRINTF_DISABLE_SUPPORT_PTRDIFF_T=1
 OUTPUT = library.wasm
-OBJ = library.o
+OBJ = library.o memory.o
 
 
 $(OUTPUT): $(OBJ) Makefile
@@ -31,3 +31,5 @@ $(OUTPUT): $(OBJ) Makefile
 
 library.o:library.cpp common.h js.h
 	clang++ -c $(COMPILE_FLAGS) -o library.o library.cpp
+memory.o:memory.cpp common.h 
+	clang++ -c $(COMPILE_FLAGS) -o memory.o memory.cpp
