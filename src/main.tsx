@@ -6,17 +6,17 @@ function get_memory() {
   return new Uint8Array(wasm.exports.memory.buffer);
 }
 
-function charPtrToString(str: number) {
+function charPtrToString(pointer: number) {
   const memory = get_memory();
   let length = 0;
-  for (; memory[str + length] !== 0; ++length) {}
-  console.log(str);
+  for (; memory[pointer + length] !== 0; ++length) {}
+  console.log(pointer);
   console.log(memory);
   console.log(length);
-  return decoder.decode(memory.subarray(str, str + length));
+  return decoder.decode(memory.subarray(pointer, pointer + length));
 }
 const decoder = new TextDecoder("utf-8");
-// const encoder = new TextEncoder("utf-8");
+
 let printString = function (str: string) {
   console.log("str", str);
 };
@@ -30,8 +30,8 @@ const importObject = {
 fetchAndInstantiate(url, importObject).then(function (instance) {
   wasm = instance;
   console.log(instance.exports);
-  instance.exports.print("aaa");
-  // instance.exports.helloWorld();
+  // instance.exports.print("aaa");
+  instance.exports.helloWorld();
   // const result = instance.exports.add(7, 8);
   // console.log(result);
 

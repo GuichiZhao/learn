@@ -1,41 +1,35 @@
 #include <iostream>
-#include <fstream>
 #include <string>
-#include <vector>
-#include <algorithm>
-#include <memory>
-#include "StrBlob.h"
-#include "StrBlobPtr.h"
-using namespace std;
-using int3 = int[3];
-
-// class Value
-// {
-// public:
-//   int i;
-//   Value(int i) : i(i)
-//   {
-//     cout << " : " << i << endl;
-//     new string(1000, '1');
-
-//   }
-//   ~Value()
-//   {
-//     cout << " delete " << i << endl;
-//   }
-// };
-
+#include "Sales_data.h"
 int main()
 {
+  Sales_data data1, data2;
+  double price = 0; // price per book, used to calculate total revenue
+  // read the first transactions: ISBN, number of books sold, price per book
+  std::cin >> data1.bookNo >> data1.units_sold >> price;
+  // calculate total revenue from price and units_sold
+  data1.revenue = data1.units_sold * price;
 
-  cout << __cplusplus << endl;
+  std::cin >> data2.bookNo >> data2.units_sold >> price;
+  data2.revenue = data2.units_sold * price;
 
-  // *s = Value(2);
-  // // cout << "xx" << endl;
-
-  // Value a = Value(1);
-  // a = Value(2);
-
-  // std::string *a = new std::string(10000, 'x');
-  // *a = "u";
+  if (data1.bookNo == data2.bookNo)
+  {
+    unsigned totalCnt = data1.units_sold + data2.units_sold;
+    double totalRevenue = data1.revenue + data2.revenue;
+    // print: ISBN, total sold, total revenue, average price per book
+    std::cout << data1.bookNo << " " << totalCnt
+              << " " << totalRevenue << " ";
+    if (totalCnt != 0)
+      std::cout << totalRevenue / totalCnt << std::endl;
+    else
+      std::cout << "(no sales)" << std::endl;
+    return 0; // indicate success
+  }
+  else
+  { // transactions weren’t for the same ISBN
+    std::cerr << "Data must refer to the same ISBN"
+              << std::endl;
+    return -1; // indicate failure
+  }
 }
