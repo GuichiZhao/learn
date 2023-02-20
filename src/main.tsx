@@ -25,6 +25,7 @@ const importObject = {
     js_print_string: function (ptr: number) {
       printString(charPtrToString(ptr));
     },
+    wasi_snapshot_preview1:()=>{}
   },
 };
 fetchAndInstantiate(url, importObject).then(function (instance) {
@@ -37,3 +38,26 @@ fetchAndInstantiate(url, importObject).then(function (instance) {
 
   // console.log(x);
 });
+
+// import { WASI, File, PreopenDirectory } from "@bjorn3/browser_wasi_shim";
+
+// let args = ["bin", "arg1", "arg2"];
+// let env = ["FOO=bar"];
+// let fds = [
+//   new File([]), // stdin
+//   new File([]), // stdout
+//   new File([]), // stderr
+//   // new PreopenDirectory(".", {
+//   //   "example.c": new File(new TextEncoder("utf-8").encode(`#include "a"`)),
+//   //   "hello.rs": new File(
+//   //     new TextEncoder("utf-8").encode(`fn main() { println!("Hello World!"); }`)
+//   //   ),
+//   // }),
+// ];
+// let wasi = new WASI(args, env, fds);
+
+// let wasm = await WebAssembly.compileStreaming(fetch(url));
+// let inst = await WebAssembly.instantiate(wasm, {
+//   wasi_snapshot_preview1: wasi.wasiImport,
+// });
+// wasi.start(inst);

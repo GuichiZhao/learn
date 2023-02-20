@@ -6,7 +6,8 @@ WASM_EXPORT int add(int a, int b)
 }
 WASM_EXPORT void helloWorld()
 {
-  js_print_string("Hello, World!\n");
+  // js_print_string("Hello, World!\n");
+  
 }
 
 // WASM_EXPORT void add1(int size)

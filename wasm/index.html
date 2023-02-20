@@ -2,34 +2,13 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Hello, World! (Sort of)</title>
-    <script src="./utils.js"></script>
+    <!-- <link rel="stylesheet" href="bootstrap.min.css" /> -->
+    <title>Hello, World!</title>
   </head>
   <body>
     <div class="container">
-      <h1>Hello, World! (Sort of)</h1>
-      I think you are <span id="age"></span> years old.
+      <h1>Hello, World!</h1>
     </div>
-
-    <script>
-      var importObject = {
-        imports: {
-          log_func: function (arg) {
-            console.log("You are this old: " + arg + " years.");
-          },
-        },
-      };
-      fetchAndInstantiate("./hellolog.wasm", importObject).then(function (
-        instance
-      ) {
-        instance.exports.log_how_old(2021, 2000);
-      });
-      WebAssembly.compileStreaming(fetch("./hellolog.wasm")).then(function (mod) {
-        var imports = WebAssembly.Module.imports(mod);
-        console.log(imports[0]);
-        var exports = WebAssembly.Module.exports(mod);
-        console.log(exports);
-      });
-    </script>
+    <script src="hello.js"></script>
   </body>
 </html>

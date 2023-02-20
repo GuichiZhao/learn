@@ -1,4 +1,7 @@
-LLVM_VERSION ?= 11
+# ../wasi-sdk-19.0/bin/clang copy.c -o copy.wasm --target=wasm32-wasi
+OUTPUT = library.wasm
+OBJ = library.o memory.o
+
 COMPILE_FLAGS = -Wall \
 		--target=wasm32 \
 		-Os \
@@ -10,26 +13,15 @@ COMPILE_FLAGS = -Wall \
 		-DPRINTF_DISABLE_SUPPORT_FLOAT=1 \
 		-DPRINTF_DISABLE_SUPPORT_LONG_LONG=1 \
 		-DPRINTF_DISABLE_SUPPORT_PTRDIFF_T=1
-OUTPUT = library.wasm
-OBJ = library.o memory.o
-
 
 $(OUTPUT): $(OBJ) Makefile
-	wasm-ld \
-		-o $(OUTPUT) \
-		--no-entry \
-		--strip-all \
-		--export-dynamic \
-		--allow-undefined \
-		--initial-memory=131072 \
-		-error-limit=0 \
-		--lto-O3 \
-		-O3 \
-		--gc-sections \
-		$(OBJ) \
-		$(LIBCXX_OBJ) \
+	../wasi-sdk-19.0-ubuntu/bin/clang++ $(OBJ) -nostartfiles -Wl,--export-all -Wl,--no-entry  -o library.wasm 
 
 library.o:library.cpp common.h js.h
-	clang++ -c $(COMPILE_FLAGS) -o library.o library.cpp
+	../wasi-sdk-19.0-ubuntu/bin/clang++   --target=wasm32-wasi -c library.cpp -o library.o
 memory.o:memory.cpp common.h 
-	clang++ -c $(COMPILE_FLAGS) -o memory.o memory.cpp
+	../wasi-sdk-19.0-ubuntu/bin/clang++  --target=wasm32-wasi -c memory.cpp -o memory.o
+
+
+clean:
+	rm -f $(OBJ) $(NANOLIBC_OBJ) $(OUTPUT)
