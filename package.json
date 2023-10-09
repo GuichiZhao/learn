@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "type": "tsc"
   },
   "dependencies": {
     "@bjorn3/browser_wasi_shim": "^0.2.3",

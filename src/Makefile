@@ -1,11 +1,12 @@
-# ../wasi-sdk-19.0/bin/clang copy.c -o copy.wasm --target=wasm32-wasi
-OUTPUT = library.wasm
-OBJ = library.o memory.o
+DEPS = 
+OBJ = $(patsubst %.cpp,%.o,$(wildcard *.cpp))
+OUTPUT = main.js
+
 
 COMPILE_FLAGS = -Wall \
 		--target=wasm32 \
 		-Os \
-		-flto \
+		-nostdlib \
 		-fvisibility=hidden \
 		-std=c++14 \
 		-ffunction-sections \
@@ -15,12 +16,16 @@ COMPILE_FLAGS = -Wall \
 		-DPRINTF_DISABLE_SUPPORT_PTRDIFF_T=1
 
 $(OUTPUT): $(OBJ) Makefile
-	../wasi-sdk-19.0-ubuntu/bin/clang++ $(OBJ) -nostartfiles -Wl,--export-all -Wl,--no-entry  -o library.wasm 
+	em++ -s LLD_REPORT_UNDEFINED -sEXPORTED_FUNCTIONS=_main,_int_sqrt  -sEXPORTED_RUNTIME_METHODS=ccall,cwrap\
+		-o $(OUTPUT) \
+		$(OBJ)
 
-library.o:library.cpp common.h js.h
-	../wasi-sdk-19.0-ubuntu/bin/clang++   --target=wasm32-wasi -c library.cpp -o library.o
-memory.o:memory.cpp common.h 
-	../wasi-sdk-19.0-ubuntu/bin/clang++  --target=wasm32-wasi -c memory.cpp -o memory.o
+
+%.o: %.cpp $(DEPS) Makefile
+	em++ \
+		-c \
+		-o $@ \
+		$<
 
 
 clean:
