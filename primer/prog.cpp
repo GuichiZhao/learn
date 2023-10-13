@@ -1,10 +1,34 @@
 #include <iostream>
-#include "fn.h"
-#include "help.h"
-using namespace std;
+#include "Sales_Data.h"
+#include "header.h"
 
-constexpr size_t scale(size_t cnt) { return new_sz() * cnt; }
+using namespace std;
+class Account
+{
+public:
+  void calculate() { amount += amount * interestRate; }
+  static double rate() { return interestRate; }
+  static void rate(double);
+
+  std::string owner;
+  double amount;
+  static constexpr int interestRate = 10;
+};
+
+// constexpr int Account::interestRate;
+
+int test(const int &i)
+{
+  cout << "Test " << i << endl;
+  return 0;
+}
+
 int main()
 {
-  cout << new_sz() << " and " << value() << endl;
+  double r;
+  r = Account::rate();
+  cout << r << endl;
+  Account ac1;
+  cout << ac1.rate() << endl;
+  test(Account::interestRate);
 }
