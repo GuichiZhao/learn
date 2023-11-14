@@ -1,18 +1,16 @@
-cmake_minimum_required(VERSION 3.22.1)
-
-project(test_guichi)
-
-
+cmake_minimum_required(VERSION 3.1)
+project(hello_guichi)
 add_executable(${PROJECT_NAME} main.cpp)
+set(MY_NAEM HOME)
+function(print)
+  foreach(var ${ARGN})
+    message("${var} is ${${var}}")
+  endforeach(var )
+endfunction()
+function(print_env)
+  foreach(var ${ARGN})
+    message("${var} is $ENV{${var}}")
+  endforeach(var )
+endfunction()
 
-add_subdirectory(external/glfw)
-
-add_subdirectory(add)
-target_include_directories(${PROJECT_NAME} 
-  PUBLIC add 
-  PUBLIC external/glfw/include
-)
-target_link_directories(${PROJECT_NAME} 
-  PRIVATE external/glfw/src
-)
-target_link_libraries(${PROJECT_NAME} guichiadd glfw) 
+print_env(PATH)
