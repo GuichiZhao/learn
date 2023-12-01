@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const decoder = new TextDecoder();
+      const u8Buffer = new Uint8Array([
+        ...[0x41],
+        ...[0xc3, 0xa9],
+        ...[0xef, 0xb8, 0x98],
+        ...[0xf0, 0x9f, 0x92, 0xa9],
+      ]);
+      const u8Str = decoder.decode(u8Buffer);
+      console.log(u8Str.split(""));
+      console.log(u8Str, u8Str.length);
+
+      const u16Decoder = new TextDecoder("utf-16be");
+      const u16Poo = new Uint8Array([0xd8, 0x3d, 0xdc, 0xa9]);
+      const u16Str = u16Decoder.decode(u16Poo);
+      console.log(u16Str.length);
+      console.log(u16Str);
+
+      const s = "\u{41}";
+      console.log(s);
+
+      // console.log(decoder.decode(poo));
+      // console.log(decoder.decode(poo).codePointAt(3).toString(16));
+    </script>
+  </body>
+</html>
