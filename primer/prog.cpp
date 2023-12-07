@@ -9,38 +9,40 @@
 #include <algorithm>
 #include <numeric>
 #include <functional>
-
-#include "Sales_Data.h"
-#include "header.h"
+#include <iterator>
+#include <map>
+#include <memory>
+#include "strblob.h"
 
 using namespace std;
-
-class T
+struct destination;
+struct connection
 {
-
-  /* data */
-public:
-  string s;
-  T(string s) : s(s)
-  {
-    cout << "constructor: " + s << endl;
-  };
-
-// private:
-  T(const T &t) : s(t.s + " copied")
-  {
-
-    cout << "Copy constrcutor" << endl;
-  }
 };
-void add(T t)
+
+connection connect(destination *);
+void disconnect(connection);
+// close the given connection
+shared_ptr<connection> make_connection(destination &d)
 {
-  cout << t.s << endl;
+  return shared_ptr<connection>(&connect(&d), [](connection* c )
+                                { disconnect(*c); });
+}
+
+void f(destination &d)
+{
+  // get a connection; must remember to close it when done
+  connection c = connect(&d);
+  // use the connection
+  // if we forget to call disconnect before exiting f, there will be no way to close c
 }
 
 int main()
 {
-  T t = string("aa");
-  // T tt = T(string("aa"));
-  // add(string("aa"));
+  int *pi = new int(42);
+  // auto x =
+  // process(pi);
+  delete pi;
+  cout << *pi << endl;
+  return 0;
 }

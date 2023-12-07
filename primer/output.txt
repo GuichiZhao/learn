@@ -1,2 +1,0 @@
-5 : 
-over slow jumps quick turtle 
