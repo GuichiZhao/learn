@@ -1,10 +1,19 @@
+#pragma once
 #include <vector>
 #include <string>
 #include <memory>
+
+class StrBlobPtr;
 using namespace std;
 class StrBlob
 {
+  friend class StrBlobPtr;
+  // other members as in § 12.1.1 (p. 456)
+
+  // and one past the last element
 public:
+  StrBlobPtr begin(); // return StrBlobPtr to the ﬁrst element
+  StrBlobPtr end();
   typedef std::vector<std::string>::size_type size_type;
   StrBlob();
   ~StrBlob();

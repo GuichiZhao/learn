@@ -4,7 +4,7 @@ CXXFLAGS+=-std=c++11
 CXXFLAGS+=-Wall
 # CXXFLAGS+=-Werror=vla
 
-objects = prog.o strblob.o
+objects = prog.o StrBlob.o StrBlobPtr.o
 output = prog
 
 run: $(output)

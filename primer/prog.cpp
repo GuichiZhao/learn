@@ -12,37 +12,49 @@
 #include <iterator>
 #include <map>
 #include <memory>
-#include "strblob.h"
+#include "StrBlob.h"
+#include "StrBlobPtr.h"
 
 using namespace std;
-struct destination;
-struct connection
+
+int i = 0;
+class Foo
 {
+public:
+  int value;
+  Foo(/* args */)
+  {
+    this->value = i++;
+    cout << "create " << this->value << endl;
+  };
+  ~Foo()
+  {
+    cout << "destroy " << this->value << endl;
+  };
 };
-
-connection connect(destination *);
-void disconnect(connection);
-// close the given connection
-shared_ptr<connection> make_connection(destination &d)
-{
-  return shared_ptr<connection>(&connect(&d), [](connection* c )
-                                { disconnect(*c); });
-}
-
-void f(destination &d)
-{
-  // get a connection; must remember to close it when done
-  connection c = connect(&d);
-  // use the connection
-  // if we forget to call disconnect before exiting f, there will be no way to close c
-}
 
 int main()
 {
-  int *pi = new int(42);
-  // auto x =
-  // process(pi);
-  delete pi;
-  cout << *pi << endl;
+  StrBlobPtr begin, end;
+  // {
+  StrBlob sb;
+  begin = sb.begin(), end = sb.end();
+  ifstream input("record.txt");
+  string line;
+  while (getline(input, line))
+  {
+    sb.push_back(line);
+  }
+
+  // while (begin != end)
+  // {
+  //   /* code */
+  // }
+
+  // }
+
+  cout << begin.incr().deref() << endl;
+
+  cout << "finish" << endl;
   return 0;
 }

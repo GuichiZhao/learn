@@ -1,4 +1,5 @@
-#include "strblob.h"
+#include "StrBlob.h"
+#include "StrBlobPtr.h"
 #include <stdexcept>
 #include <algorithm>
 #include <iostream>
@@ -55,4 +56,9 @@ void StrBlob::print() const
   auto begin = data->begin(), end = data->end();
   for_each(begin, end, [](string s)
            { cout << s << endl; });
+}
+StrBlobPtr StrBlob::begin() { return StrBlobPtr(*this); }
+StrBlobPtr StrBlob::end()
+{
+  return StrBlobPtr(*this, data->size());
 }
