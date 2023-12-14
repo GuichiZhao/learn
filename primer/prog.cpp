@@ -18,21 +18,22 @@
 
 using namespace std;
 
-void f(HasPtr h){};
-
 int main()
 {
+  vector<HasPtr> v = {string("aa"), string("cc"), string("bb")};
+  for_each(v.begin(), v.end(), [](HasPtr &x)
+           { cout << *x.ps << endl; });
+  sort(v.begin(), v.end());
+  for_each(v.begin(), v.end(), [](HasPtr &x)
+           { cout << *x.ps << endl; });
 
-  StrBlob sb{"aa", "bb", "cc"};
-  StrBlob sb1(sb);
-  sb1 = sb;
-  sb1.push_back("x11x");
-  auto itr = sb.begin();
-  for (StrBlob::size_type i = 0; i < sb.size(); i++)
-  {
-    cout << itr.deref() << endl;
-    itr.incr();
-  }
+
+
+  // HasPtr hp1("aa");
+  // HasPtr hp2("bb");
+  // swap(hp1, hp2);
+
+  // cout << *hp1.ps << endl;
 
   cout << "Finish" << endl;
   return 0;

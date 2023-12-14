@@ -13,6 +13,10 @@ public:
     this->i = s.i;
     this->ps = new string(*s.ps);
   }
+  bool operator<(const HasPtr &rhs)
+  {
+    return *ps > *rhs.ps;
+  }
   HasPtr operator=(HasPtr const &s)
   {
     cout << "operator=(HasPtr const &s)" << endl;
@@ -33,3 +37,12 @@ public:
   std::string *ps;
   int i;
 };
+
+void swap(HasPtr &lhs, HasPtr &rhs)
+{
+  cout << "Custom swap===" << endl;
+  using std::swap;
+  swap(lhs.ps, rhs.ps); // swap the pointers, not the string data
+  swap(lhs.i, rhs.i);
+  // swap the int members
+}
