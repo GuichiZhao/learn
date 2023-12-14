@@ -7,7 +7,7 @@ CXXFLAGS+=-Wall
 objects = prog.o StrBlob.o StrBlobPtr.o
 output = prog
 
-run: $(output)
+run: $(output) 
 	./${output} < input.txt
 
 $(output): $(objects)

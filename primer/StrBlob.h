@@ -18,6 +18,15 @@ public:
   StrBlob();
   ~StrBlob();
   StrBlob(std::initializer_list<std::string> il);
+  StrBlob(const StrBlob &c)
+  {
+    data = make_shared<vector<string>>(*c.data);
+  };
+  StrBlob operator=(const StrBlob &c)
+  {
+    data = make_shared<vector<string>>(*c.data);
+    return *this;
+  }
   size_type size() const { return data->size(); }
   bool empty() const { return data->empty(); }
   // add and remove elements

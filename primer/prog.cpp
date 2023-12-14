@@ -14,47 +14,26 @@
 #include <memory>
 #include "StrBlob.h"
 #include "StrBlobPtr.h"
+#include "HasPtr.h"
 
 using namespace std;
 
-int i = 0;
-class Foo
-{
-public:
-  int value;
-  Foo(/* args */)
-  {
-    this->value = i++;
-    cout << "create " << this->value << endl;
-  };
-  ~Foo()
-  {
-    cout << "destroy " << this->value << endl;
-  };
-};
+void f(HasPtr h){};
 
 int main()
 {
-  StrBlobPtr begin, end;
-  // {
-  StrBlob sb;
-  begin = sb.begin(), end = sb.end();
-  ifstream input("record.txt");
-  string line;
-  while (getline(input, line))
+
+  StrBlob sb{"aa", "bb", "cc"};
+  StrBlob sb1(sb);
+  sb1 = sb;
+  sb1.push_back("x11x");
+  auto itr = sb.begin();
+  for (StrBlob::size_type i = 0; i < sb.size(); i++)
   {
-    sb.push_back(line);
+    cout << itr.deref() << endl;
+    itr.incr();
   }
 
-  // while (begin != end)
-  // {
-  //   /* code */
-  // }
-
-  // }
-
-  cout << begin.incr().deref() << endl;
-
-  cout << "finish" << endl;
+  cout << "Finish" << endl;
   return 0;
 }
