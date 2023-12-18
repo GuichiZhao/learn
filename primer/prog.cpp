@@ -20,14 +20,14 @@ using namespace std;
 
 int main()
 {
-  vector<HasPtr> v = {string("aa"), string("cc"), string("bb")};
+  HasPtr s{"s"}, a{"a"}, c{"c"};
+  std::vector<HasPtr> v{s, a, c};
+
+  // swap(v[0], v[1]);
+  std::sort(v.begin(), v.end());
+
   for_each(v.begin(), v.end(), [](HasPtr &x)
            { cout << *x.ps << endl; });
-  sort(v.begin(), v.end());
-  for_each(v.begin(), v.end(), [](HasPtr &x)
-           { cout << *x.ps << endl; });
-
-
 
   // HasPtr hp1("aa");
   // HasPtr hp2("bb");

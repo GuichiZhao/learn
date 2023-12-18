@@ -5,11 +5,11 @@ class HasPtr
 public:
   HasPtr(const std::string &s = std::string()) : ps(new std::string(s)), i(0)
   {
-    cout << "HasPtr(const std::string &s = std::string())" << endl;
+    // cout << "HasPtr(const std::string &s = std::string())" << endl;
   }
   HasPtr(const HasPtr &s)
   {
-    cout << "HasPtr(const HasPtr &s)" << endl;
+    // cout << "HasPtr(const HasPtr &s)" << endl;
     this->i = s.i;
     this->ps = new string(*s.ps);
   }
@@ -17,9 +17,17 @@ public:
   {
     return *ps > *rhs.ps;
   }
+  // void swap(HasPtr &rhs)
+  // {
+  //   using std::swap;
+  //   swap(ps, rhs.ps);
+  //   swap(i, rhs.i);
+  //   std::cout << "call swap(HasPtr &rhs)" << std::endl;
+  // }
+
   HasPtr operator=(HasPtr const &s)
   {
-    cout << "operator=(HasPtr const &s)" << endl;
+    // cout << "operator=(HasPtr const &s)" << endl;
     if (this != &s)
     {
       delete this->ps;
@@ -30,7 +38,7 @@ public:
   }
   ~HasPtr()
   {
-    cout << "~HasPtr()" << endl;
+    // cout << "~HasPtr()" << endl;
     delete this->ps;
   }
   // ~HasPtr() = delete;
@@ -38,11 +46,7 @@ public:
   int i;
 };
 
-void swap(HasPtr &lhs, HasPtr &rhs)
-{
-  cout << "Custom swap===" << endl;
-  using std::swap;
-  swap(lhs.ps, rhs.ps); // swap the pointers, not the string data
-  swap(lhs.i, rhs.i);
-  // swap the int members
-}
+// void swap(HasPtr &lhs, HasPtr &rhs)
+// {
+//   lhs.swap(rhs);
+// }
