@@ -1,27 +1,40 @@
-#include <string>
-#include <list>
-#include <array>
-#include <sstream>
-#include <vector>
 #include <iostream>
 #include <fstream>
+#include <list>
+#include <string.h>
+#include <vector>
 #include <deque>
+#include <array>
+#include <sstream>
 #include <algorithm>
 #include <numeric>
-#include "words.h"
-#include "Sales_item.h"
+#include <functional>
+#include <iterator>
+#include <map>
+#include <memory>
+#include "StrBlob.h"
+#include "StrBlobPtr.h"
+#include "HasPtr.h"
+
 using namespace std;
 
-bool greatThenFive(string s)
+int main()
 {
-  return s.size() >= 5;
-}
+  HasPtr s{"s"}, a{"a"}, c{"c"};
+  std::vector<HasPtr> v{s, a, c};
 
-int main(int argc, char **argv)
-{
-  string line("FIRST,MIDDLE,LAST");
-  auto rcomma = find(line.crbegin(), line.crend(), ',');
-  cout << string(rcomma.base(), line.cend()) << endl;
+  // swap(v[0], v[1]);
+  std::sort(v.begin(), v.end());
 
+  for_each(v.begin(), v.end(), [](HasPtr &x)
+           { cout << *x.ps << endl; });
 
+  // HasPtr hp1("aa");
+  // HasPtr hp2("bb");
+  // swap(hp1, hp2);
+
+  // cout << *hp1.ps << endl;
+
+  cout << "Finish" << endl;
+  return 0;
 }

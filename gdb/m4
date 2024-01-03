@@ -1,0 +1,9 @@
+define(foo,0000)
+foo
+0000
+define(bar,defn(‘foo’))
+bar
+0000
+changequote(<QUOTE>,<UNQUOTE>)
+define(baz,defn(<QUOTE>foo<UNQUOTE>))
+baz
