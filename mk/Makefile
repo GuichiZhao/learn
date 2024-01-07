@@ -1,12 +1,20 @@
-count_words: guichi
-count_words: count_words.o lexer.o 
-	gcc count_words.o lexer.o -lfl -o count_words
-count_words.o: count_words.c 
-	gcc -c  count_words.c
-lexer.o: lexer.c
-	gcc -c lexer.c
+Program=count_words
+vpath %.c src
+vpath %.l src
+vpath %.h include
+CPPFLAGS = -I include
+
+test:$(Program)
+	./$(Program) < src/lexer.l
+$(Program): count_words.o lexer.o 
+	gcc $(CPPFLAGS) -L/usr/local/opt/flex/lib -lfl $^ -o $@
+count_words.o: count_words.c counter.h
+	gcc $(CPPFLAGS) -c  $<
+lexer.o: lexer.c lexer.h
+	gcc $(CPPFLAGS) -c $<
 lexer.c: lexer.l
-	flex -t lexer.l > lexer.c
+	flex -t $< > $@
 .PHONY: clean
-clean:
+clean: lexer.l
 	rm -f *.o lexer.c
+
