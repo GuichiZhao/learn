@@ -9,13 +9,12 @@ class QueryResult;
 class TextQuery
 {
 public:
-  using line_no = std::vector<std::string>::size_type;
+  using line_no = vector<string>::size_type;
   TextQuery(ifstream &input);
-  QueryResult query(const std::string &) const;
-  ~TextQuery();
+  QueryResult query(const string &) const;
 
 private:
-  std::shared_ptr<std::vector<std::string>> file;
+  shared_ptr<vector<string>> file;
   map<string, shared_ptr<set<line_no>>> wm;
 };
-
+ostream &print(ostream &os, const QueryResult &qr);
