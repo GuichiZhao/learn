@@ -6,7 +6,8 @@ GLFW_LIB=${GLFW}/lib-x86_64
 
 LINK= -L ${GLFW_LIB} -lglfw.3 \
 -L $(GLEW_LIB) -lGLEW \
--framework Cocoa -framework OpenGL -framework IOKit
+-framework Cocoa -framework OpenGL -framework IOKit \
+-Ibuild/include glad/src/glad.c
 
 CXX=g++
 CXXFLAGS=-g -Wall -std=c++11 -framework OpenGL -I $(GLFW)/include -I ${GLAD}/include 
@@ -21,8 +22,8 @@ main: main.o glad.o
 main.o: main.cpp
 	g++ ${CXXFLAGS} -c main.cpp
 
-glad.o: glad.c
-	gcc  -c glad.c -I ${GLAD}/include
+# glad.o: glad.c
+# 	gcc  -c glad.c -I ${GLAD}/include
 
 clean:
 	rm *.o
