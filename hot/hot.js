@@ -19,8 +19,8 @@ const parseTitle = (text) => {
 
 async function run() {
   let result = "";
-  const from = 500,
-    to = 600;
+  const from = 800,
+    to = 900;
   for (let i = from; i <= to; i++) {
     const url = "https://njav.tv/ja/v/tokyo-hot-n0" + i;
 
