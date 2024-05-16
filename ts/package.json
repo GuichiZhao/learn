@@ -1,9 +1,0 @@
-{
-  "scripts": {
-    "start": "tsc"
-  },
-  "dependencies": {
-    "moment": "^2.29.4",
-    "typescript": "^5.2.2"
-  }
-}
