@@ -1,14 +1,17 @@
 import * as mat4 from "./gl-matrix/mat4.js";
-import * as vec4 from "./gl-matrix/vec4.js";
-import * as vec3 from "./gl-matrix/vec3.js";
+
+
+
 import { setupUI } from "./ui.js";
 import {
   createProgramInfo,
   setUniforms,
   setBuffersAndAttributes,
   drawBufferInfo,
+  initCanvas,
 } from "./util.js";
 import { create3DFBufferInfo, createCameraBufferInfo } from "./primatives.js";
+import { drawCoordinate } from "./coordinate.js";
 
 main();
 
@@ -27,9 +30,11 @@ main();
 // console.log(afterProjection) //-51.9615249633,-51.961524963378906,18.019010543823242,20;
 
 async function main() {
-  const canvas = document.querySelector("#glcanvas");
-  canvas.width = canvas.clientWidth * devicePixelRatio;
-  canvas.height = canvas.clientHeight * devicePixelRatio;
+  /**
+   * @type {HTMLDivElement}
+   */
+  const container = document.getElementById("container");
+  const canvas = initCanvas(container);
   /**
    * @type {WebGLRenderingContext}
    */
@@ -152,8 +157,9 @@ async function main() {
     render(gl);
 
     function render() {
-      const halfWidth = width / 2 * 2;
-      gl.viewport(0, 0, halfWidth, height);
+      const halfWidth = width / 2;
+      const leftViewport = [0, 0, halfWidth, height]
+      gl.viewport(...leftViewport);
 
       gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
       gl.enable(gl.DEPTH_TEST);
@@ -195,25 +201,26 @@ async function main() {
       mat4.scale(model, model, scale);
 
       drawScene(model, cameraViewProjection);
+      drawCoordinate({ id: 'left', container, glViewport: leftViewport, viewProjection: cameraViewProjection })
 
-      // const rightViewport = [halfWidth, 0, halfWidth, height]
-      // gl.viewport(...rightViewport);
+      const rightViewport = [halfWidth, 0, halfWidth, height]
+      gl.viewport(...rightViewport);
 
-      // const worldViewProjection = mat4.orthoNO(
-      //   mat4.create(),
-      //   -halfWidth,
-      //   halfWidth,
-      //   -height,
-      //   height,
-      //   1500,
-      //   -1500
-      // );
-      // drawCoordinate(canvas, rightViewport, worldViewProjection)
-      // drawCamera(
-      //   mat4.fromTranslation(mat4.create(), camaraPosition),
-      //   worldViewProjection
-      // );
-      // drawScene(model, worldViewProjection);
+      const worldViewProjection = mat4.orthoNO(
+        mat4.create(),
+        -halfWidth,
+        halfWidth,
+        -height,
+        height,
+        1500,
+        -1500
+      );
+      drawCoordinate({ id: 'right', container, glViewport: rightViewport, viewProjection: worldViewProjection })
+      drawCamera(
+        mat4.fromTranslation(mat4.create(), camaraPosition),
+        worldViewProjection
+      );
+      drawScene(model, worldViewProjection);
     }
     function drawCamera(model, viewProjection) {
       gl.useProgram(cameraProgram.program);

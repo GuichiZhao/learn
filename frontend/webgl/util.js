@@ -553,3 +553,19 @@ function guessNumComponentsFromName(name, length) {
 
   return numComponents;
 }
+/**
+ * 
+ * @param {HTMLDivElement} container 
+ */
+export const initCanvas=(container)=>{
+  const canvas = document.createElement("canvas");
+  const { clientWidth, clientHeight } = container
+  canvas.style.width=clientWidth+'px';
+  canvas.style.height=clientHeight+'px';
+  canvas.style.display='block'
+  canvas.style.position='absolute'
+  canvas.width = clientWidth * devicePixelRatio;
+  canvas.height = clientHeight * devicePixelRatio;
+  container.appendChild(canvas);
+  return canvas;
+}
