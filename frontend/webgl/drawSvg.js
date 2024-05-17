@@ -74,9 +74,11 @@ const all = createAxesConfigs({
   }
 })
 
+console.log(all)
 
 
-export function drawCoordinate({ id = '', glViewport, viewProjection, container, shapes = all }) {
+
+export function drawSvg({ id = '', glViewport, viewProjection, container, shapes = all }) {
   const [x, y, width, height] = glViewport.map(x => x / devicePixelRatio)
   const glClipToSvg = new Float32Array([
     width / 2, 0, 0, 0,
@@ -130,7 +132,7 @@ export function drawCoordinate({ id = '', glViewport, viewProjection, container,
     .data((config) => {
       const points = config.points.map(worldToSvg)
       return [{
-        points: `${points[0][0]},${points[0][1]} ${points[1][0]},${points[1][1]} ${points[2][0]},${points[2][1]} ${points[3][0]},${points[3][1]} `,
+        points: points.map(p=>`${p[0]},${p[1]}`).join(" "),
         fill: config.color,
       }]
     })

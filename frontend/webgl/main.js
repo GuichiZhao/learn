@@ -1,5 +1,4 @@
 import * as mat4 from "./gl-matrix/mat4.js";
-console.log("hell")
 import { setupUI } from "./ui.js";
 import {
   createProgramInfo,
@@ -8,8 +7,12 @@ import {
   drawBufferInfo,
   initCanvas,
 } from "./util.js";
-import { create3DFBufferInfo, createCameraBufferInfo } from "./primatives.js";
-import { createAxesConfigs, drawCoordinate } from "./drawSvg.js";
+import {
+  create3DFBufferInfo, createCameraBufferInfo,
+  createUnitCubeWireframeBufferInfo,
+} from "./primatives.js";
+import { createAxesConfigs, drawSvg } from "./drawSvg.js";
+import { pointer } from "d3-selection";
 
 main();
 
@@ -48,9 +51,10 @@ async function main() {
     "./shader/camera-f.glsl",
   ]);
 
-  const near = 1;
-  const far = 2000;
+  const near = 70;
+  const far = 800;
   const zCenter = 0;
+  const lightPosition = [100, 100, zCenter - 200]
   const width = gl.canvas.width;
   const height = gl.canvas.height;
   const offsetRadius = 200,
@@ -131,6 +135,7 @@ async function main() {
     });
     const cameraBufferInfo = createCameraBufferInfo(gl, 30);
     const fBufferInfo = create3DFBufferInfo(gl);
+    const cubeBufferInfo = createUnitCubeWireframeBufferInfo(gl)
 
     var texture = gl.createTexture();
     gl.bindTexture(gl.TEXTURE_2D, texture);
@@ -163,6 +168,7 @@ async function main() {
 
       gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
       gl.enable(gl.DEPTH_TEST);
+      gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 
       const cameraProjection = mat4.perspective(
         mat4.create(),
@@ -182,6 +188,7 @@ async function main() {
         [0, 0, zCenter],
         [0, 1, 0]
       );
+
       const cameraViewProjection = mat4.multiply(
         mat4.create(),
         cameraProjection,
@@ -200,22 +207,22 @@ async function main() {
       mat4.scale(model, model, scale);
 
       drawScene(model, cameraViewProjection);
-      drawCoordinate({ id: 'left', container, glViewport: leftViewport, viewProjection: cameraViewProjection })
+      drawSvg({ id: 'left', container, glViewport: leftViewport, viewProjection: cameraViewProjection })
 
       const rightViewport = [halfWidth, 0, halfWidth, height]
       gl.viewport(...rightViewport);
 
 
       const rightAspect = rightViewport[2] / rightViewport[3]
-      const globalProjection = mat4.perspectiveNO(mat4.create(),
-        degToRad(60), rightAspect, near, far)
+      const range = 1000
+      const globalProjection = mat4.ortho(mat4.create(), -range, range, -range * rightAspect, range * rightAspect, 10000, -10000)
       const globalView = mat4.lookAt(mat4.create(),
-        [800, 800, -800],
+        [1200, 1500, 1800],
         [0, 0, 0],
         [0, 1, 0]
       );
       const worldViewProjection = mat4.multiply(mat4.create(), globalProjection, globalView)
-      drawCoordinate({
+      drawSvg({
         id: 'right', container, glViewport: rightViewport,
         viewProjection: worldViewProjection, shapes: createAxesConfigs({
           x: { axis: true },
@@ -223,21 +230,50 @@ async function main() {
           z: { axis: true, plane: true, color: [255, 212, 34] }
         })
       })
+      // const 
+      drawSvg({
+        id: 'light', container, glViewport: rightViewport,
+        viewProjection: worldViewProjection, shapes: [{
+          color: [255, 0, 0, 1],
+          points: [
+            [100, 100, zCenter - 200, ],
+            [100 + 10, 100 + 10, zCenter - 200 + 10],
+            [100 - 10, 100 + 20, zCenter - 200 - 30]
+          ]
+        }]
+      })
+      const cameraModel = mat4.invert(mat4.create(), cameraView)
       drawCamera(
-        mat4.invert(mat4.create(), cameraView),
+        cameraModel,
         worldViewProjection
       );
+      drawFrustum(
+        mat4.invert(mat4.create(), cameraViewProjection),
+        worldViewProjection)
       drawScene(model, worldViewProjection);
+
+
     }
     function drawCamera(model, viewProjection) {
       gl.useProgram(cameraProgram.program);
-
       setBuffersAndAttributes(gl, cameraProgram, cameraBufferInfo);
+      setUniforms(cameraProgram.uniformSetters, {
+        u_matrix: mat4.multiply(mat4.create(), viewProjection, model), u_color: [0, 0, 0, 1]
+      });
+
+      drawBufferInfo(gl, cameraBufferInfo, gl.LINES);
+    }
+
+    function drawFrustum(model, viewProjection) {
+      gl.useProgram(cameraProgram.program)
+      setBuffersAndAttributes(gl, cameraProgram, cubeBufferInfo);
 
       setUniforms(cameraProgram.uniformSetters, {
         u_matrix: mat4.multiply(mat4.create(), viewProjection, model),
+        u_color: [120, 0, 110, 1]
       });
-      drawBufferInfo(gl, cameraBufferInfo, gl.LINES);
+      drawBufferInfo(gl, cubeBufferInfo, gl.LINES);
+
     }
 
     function drawScene(model, viewProjection) {
@@ -261,7 +297,7 @@ async function main() {
           u_matrix,
           u_model,
           u_modelInvertAndTranspose,
-          u_lightPosition: [100, 100, zCenter - 200],
+          u_lightPosition: lightPosition,
         });
         drawBufferInfo(gl, fBufferInfo);
       }

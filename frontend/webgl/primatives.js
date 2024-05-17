@@ -296,3 +296,101 @@ function create3DFVertices() {
 
   return arrays;
 }
+const CUBE_FACE_INDICES = [
+  [3, 7, 5, 1], // right
+  [6, 2, 0, 4], // left
+  [6, 7, 3, 2], // ??
+  [0, 1, 5, 4], // ??
+  [7, 6, 4, 5], // front
+  [2, 3, 1, 0], // back
+];
+function createCubeVertices(size) {
+  const k = size / 2;
+  const cornerVertices = [
+    [-k, -k, -k],
+    [+k, -k, -k],
+    [-k, +k, -k],
+    [+k, +k, -k],
+    [-k, -k, +k],
+    [+k, -k, +k],
+    [-k, +k, +k],
+    [+k, +k, +k],
+  ];
+
+  const faceNormals = [
+    [+1, +0, +0],
+    [-1, +0, +0],
+    [+0, +1, +0],
+    [+0, -1, +0],
+    [+0, +0, +1],
+    [+0, +0, -1],
+  ];
+
+  const uvCoords = [
+    [1, 0],
+    [0, 0],
+    [0, 1],
+    [1, 1],
+  ];
+
+  const numVertices = 6 * 4;
+  const positions = webglUtils.createAugmentedTypedArray(3, numVertices);
+  const normals = webglUtils.createAugmentedTypedArray(3, numVertices);
+  const texCoords = webglUtils.createAugmentedTypedArray(2, numVertices);
+  const indices = webglUtils.createAugmentedTypedArray(3, 6 * 2, Uint16Array);
+
+  for (let f = 0; f < 6; ++f) {
+    const faceIndices = CUBE_FACE_INDICES[f];
+    for (let v = 0; v < 4; ++v) {
+      const position = cornerVertices[faceIndices[v]];
+      const normal = faceNormals[f];
+      const uv = uvCoords[v];
+
+      // Each face needs all four vertices because the normals and texture
+      // coordinates are not all the same.
+      positions.push(position);
+      normals.push(normal);
+      texCoords.push(uv);
+
+    }
+    // Two triangles make a square face.
+    const offset = 4 * f;
+    indices.push(offset + 0, offset + 1, offset + 2);
+    indices.push(offset + 0, offset + 2, offset + 3);
+  }
+
+  return {
+    position: positions,
+    normal: normals,
+    texcoord: texCoords,
+    indices: indices,
+  };
+}
+export const createCubeBufferInfo = createBufferInfoFunc(createCubeVertices)
+
+export function createUnitCubeWireframeBufferInfo(gl) {
+  // first let's add a cube. It goes from 1 to 3
+  // because cameras look down -Z so we want
+  // the camera to start at Z = 0. We'll put a
+  // a cone in front of this cube opening
+  // toward -Z
+  const positions = [
+    -1, -1, -1,  // cube vertices
+    1, -1, -1,
+    -1, 1, -1,
+    1, 1, -1,
+    -1, -1, 1,
+    1, -1, 1,
+    -1, 1, 1,
+    1, 1, 1,
+  ];
+  const indices = [
+    0, 1, 1, 3, 3, 2, 2, 0, // cube indices
+    4, 5, 5, 7, 7, 6, 6, 4,
+    0, 4, 1, 5, 3, 7, 2, 6,
+  ];
+  return webglUtils.createBufferInfoFromArrays(gl, {
+    position: positions,
+    indices,
+  });
+}
