@@ -4,7 +4,10 @@
 <head>
   <meta charset="utf-8" />
   <title>WebGL Demo</title>
-  <script src="./main.js" type="module"></script>
+  <script src="./out.js" type="module"></script>
+  <script>
+    new EventSource('/esbuild').addEventListener('change', () => location.reload())
+  </script>
   <link rel="stylesheet" href="./tutorial.css" />
 </head>
 

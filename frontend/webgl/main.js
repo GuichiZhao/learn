@@ -1,7 +1,5 @@
 import * as mat4 from "./gl-matrix/mat4.js";
-
-
-
+console.log("hell")
 import { setupUI } from "./ui.js";
 import {
   createProgramInfo,
@@ -11,9 +9,11 @@ import {
   initCanvas,
 } from "./util.js";
 import { create3DFBufferInfo, createCameraBufferInfo } from "./primatives.js";
-import { drawCoordinate } from "./coordinate.js";
+import { createAxesConfigs, drawCoordinate } from "./drawSvg.js";
 
 main();
+
+
 
 
 // const position = vec4.fromValues(10, 10, 60, 1);
@@ -172,7 +172,6 @@ async function main() {
         far
       );
       const camaraPosition = [
-        // 0, 0, 0,
         0 + cameraRadius * Math.sin(degToRad(setting.cameraAngle)),
         100,
         zCenter + cameraRadius * Math.cos(degToRad(setting.cameraAngle)),
@@ -206,18 +205,26 @@ async function main() {
       const rightViewport = [halfWidth, 0, halfWidth, height]
       gl.viewport(...rightViewport);
 
-      const worldViewProjection = mat4.orthoNO(
-        mat4.create(),
-        -halfWidth,
-        halfWidth,
-        -height,
-        height,
-        1500,
-        -1500
+
+      const rightAspect = rightViewport[2] / rightViewport[3]
+      const globalProjection = mat4.perspectiveNO(mat4.create(),
+        degToRad(60), rightAspect, near, far)
+      const globalView = mat4.lookAt(mat4.create(),
+        [800, 800, -800],
+        [0, 0, 0],
+        [0, 1, 0]
       );
-      drawCoordinate({ id: 'right', container, glViewport: rightViewport, viewProjection: worldViewProjection })
+      const worldViewProjection = mat4.multiply(mat4.create(), globalProjection, globalView)
+      drawCoordinate({
+        id: 'right', container, glViewport: rightViewport,
+        viewProjection: worldViewProjection, shapes: createAxesConfigs({
+          x: { axis: true },
+          y: { axis: true, },
+          z: { axis: true, plane: true, color: [255, 212, 34] }
+        })
+      })
       drawCamera(
-        mat4.fromTranslation(mat4.create(), camaraPosition),
+        mat4.invert(mat4.create(), cameraView),
         worldViewProjection
       );
       drawScene(model, worldViewProjection);

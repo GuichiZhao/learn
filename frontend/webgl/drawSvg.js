@@ -1,5 +1,5 @@
 import * as vec4 from "./gl-matrix/vec4.js";
-import * as d3 from '../node_modules/d3-selection/src/index.js'
+import * as d3 from 'd3-selection'
 function Point(x, y, z = 0, w = 1) {
   return new Float32Array([x, y, z, w]);
 }
@@ -31,7 +31,6 @@ export function createAxesConfigs({ x, y, z }) {
       const from = [0, 0, 0]
       const to = [0, 0, 0]
       to[position] = length
-      console.log(color)
       shapes.push({ points: [from, to], color: setColor(color) })
     }
     if (plane) {
@@ -74,7 +73,6 @@ const all = createAxesConfigs({
     color: [0, 0, 255]
   }
 })
-console.log(all)
 
 
 

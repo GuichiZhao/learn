@@ -8,33 +8,15 @@ export function createCameraBufferInfo(gl, scale = 1) {
   // a cone in front of this cube opening
   // toward -Z
   const positions = [
-    -1,
-    -1,
-    1, // cube vertices
-    1,
-    -1,
-    1,
-    -1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    -1,
-    -1,
-    3,
-    1,
-    -1,
-    3,
-    -1,
-    1,
-    3,
-    1,
-    1,
-    3,
-    0,
-    0,
-    1, // cone tip
+    -1, -1, 1, // cube vertices
+    1, -1, 1,
+    -1, 1, 1,
+    1, 1, 1,
+    -1, -1, 3,
+    1, -1, 3,
+    -1, 1, 3,
+    1, 1, 3,
+    0, 0, 1, // cone tip
   ];
   const indices = [
     0,
