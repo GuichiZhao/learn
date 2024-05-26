@@ -9,7 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "d3-selection": "^3.0.0"
+    "d3-selection": "^3.0.0",
+    "pixi.js": "^8.1.5"
   },
   "devDependencies": {
     "esbuild": "^0.21.3"
